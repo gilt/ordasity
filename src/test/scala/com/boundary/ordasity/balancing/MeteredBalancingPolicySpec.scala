@@ -16,13 +16,13 @@
 
 package com.boundary.ordasity.balancing
 
+import nl.grons.metrics.scala.Meter
 import org.junit.Test
 import com.boundary.ordasity._
 import collection.JavaConversions._
 import org.apache.zookeeper.ZooKeeper
 import com.twitter.common.zookeeper.ZooKeeperClient
 import java.util.concurrent.ScheduledFuture
-import com.yammer.metrics.scala.Meter
 import java.util.{LinkedList, HashMap, UUID}
 import com.simple.simplespec.Spec
 import org.apache.zookeeper.data.Stat

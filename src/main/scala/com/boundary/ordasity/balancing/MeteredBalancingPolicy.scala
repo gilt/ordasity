@@ -16,11 +16,12 @@
 
 package com.boundary.ordasity.balancing
 
+import nl.grons.metrics.scala.Meter
+
 import collection.JavaConversions._
 import overlock.atomicmap.AtomicMap
 import com.boundary.ordasity._
 import java.util.concurrent.{TimeUnit, ScheduledFuture}
-import com.yammer.metrics.scala.Meter
 import java.util.{TimerTask, LinkedList}
 import org.apache.zookeeper.CreateMode
 

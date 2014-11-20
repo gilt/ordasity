@@ -1,7 +1,9 @@
 package com.boundary.ordasity
 
 import java.util.concurrent.LinkedBlockingQueue
-import com.yammer.metrics.scala.Instrumented
+
+import com.codahale.metrics.MetricRegistry
+import nl.grons.metrics.scala.InstrumentedBuilder
 
 class ClaimToken()
 object ClaimToken { val token = new ClaimToken }
@@ -14,7 +16,8 @@ object ClaimToken { val token = new ClaimToken }
  * but it seems desirable to stick with j/u/c classes. This implementation will
  * also allow for other types of events aside from a ClaimToken, if necessary.
  */
-class TokenQueue[ClaimToken] extends LinkedBlockingQueue[ClaimToken] with Instrumented {
+class TokenQueue[ClaimToken] extends LinkedBlockingQueue[ClaimToken] with InstrumentedBuilder {
+  override val metricRegistry = new MetricRegistry
   val suppressedMeter = metrics.meter("ordasity", "suppressedClaimCycles")
   val requestedMeter = metrics.meter("ordasity", "claimCycles")
 

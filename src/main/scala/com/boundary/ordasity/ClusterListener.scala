@@ -16,8 +16,8 @@
 
 package com.boundary.ordasity
 
-import com.yammer.metrics.scala.Meter
 import com.twitter.common.zookeeper.ZooKeeperClient
+import nl.grons.metrics.scala.Meter
 
 abstract class Listener {
   def onJoin(client: ZooKeeperClient)

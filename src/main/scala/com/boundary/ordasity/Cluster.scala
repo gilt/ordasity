@@ -16,11 +16,12 @@
 
 package com.boundary.ordasity
 
-import com.yammer.metrics.scala.{Meter, Instrumented}
 import java.lang.management.ManagementFactory
 import javax.management.ObjectName
 
 import java.util.{Collections, HashMap, Map}
+import com.codahale.metrics.MetricRegistry
+import nl.grons.metrics.scala.{Meter, InstrumentedBuilder}
 import org.slf4j.LoggerFactory
 
 import scala.collection.JavaConversions._
@@ -49,7 +50,8 @@ trait ClusterMBean {
 }
 
 class Cluster(val name: String, val listener: Listener, config: ClusterConfig)
-    extends ClusterMBean with Instrumented {
+    extends ClusterMBean with InstrumentedBuilder {
+  override val metricRegistry = new MetricRegistry()
 
   val log = LoggerFactory.getLogger(getClass)
   var myNodeID = config.nodeId
