@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.boundary</groupId>
-    <artifactId>ordasity-scala_2.10.3</artifactId>
+    <artifactId>ordasity-scala_2.10</artifactId>
     <version>0.6.0</version>
     <name>Ordasity</name>
     <url>http://www.boundary.com</url>
