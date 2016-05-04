@@ -16,12 +16,11 @@
 
 package com.boundary.ordasity.balancing
 
-import com.codahale.metrics.MetricRegistry
-import nl.grons.metrics.scala.InstrumentedBuilder
 import org.slf4j.LoggerFactory
 
 import collection.JavaConversions._
 import com.boundary.ordasity.{ZKUtils, NodeState, ClusterConfig, Cluster}
+import com.boundary.ordasity.metrics.Instrumented
 import java.util.{TimerTask, LinkedList}
 import java.util.concurrent.{CountDownLatch, TimeUnit}
 
@@ -31,8 +30,7 @@ import java.util.concurrent.{CountDownLatch, TimeUnit}
  * implementations: CountBalancingPolicy and MeteredBalancingPolicy.
  */
 abstract class BalancingPolicy(cluster: Cluster, config: ClusterConfig)
-  extends InstrumentedBuilder {
-  override val metricRegistry = new MetricRegistry()
+  extends Instrumented {
   val log = LoggerFactory.getLogger(getClass)
 
   // Implementation required
@@ -107,7 +105,7 @@ abstract class BalancingPolicy(cluster: Cluster, config: ClusterConfig)
       } else {
         cluster.workUnitsPeggedToMe.remove(workUnitId)
       }
-      
+
       isPegged
     } catch {
       case e: Exception =>

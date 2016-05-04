@@ -151,7 +151,7 @@ class MeteredBalancingPolicySpec extends Spec {
       cluster.loadMap.putAll(map)
 
       balancer.rebalance()
-      
+
       Thread.sleep(1200)
 
       (balancer.myLoad() >= balancer.evenDistribution()).must(be(true))
