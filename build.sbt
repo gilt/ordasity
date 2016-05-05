@@ -16,12 +16,16 @@ credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
 
 testOptions += Tests.Argument(TestFrameworks.JUnit, "-q", "-v")
 
+val jacksonVersion = "2.6.5"
+
+val slf4jVersion = "1.7.7"
+
 libraryDependencies ++= Seq(
-  "com.gilt"                      %%   "overlock"              % "0.10.0-SNAPSHOT",
-  "com.fasterxml.jackson.core"     %   "jackson-databind"      % "2.6.5",
-  "com.fasterxml.jackson.module"  %%   "jackson-module-scala"  % "2.6.5",
-  "org.slf4j"                      %   "log4j-over-slf4j"      % "1.7.7",
-  "org.slf4j"                      %   "slf4j-simple"          % "1.7.7",
+  "com.gilt"                      %%   "overlock-scala"        % "0.10.0",
+  "com.fasterxml.jackson.core"     %   "jackson-databind"      % jacksonVersion,
+  "com.fasterxml.jackson.module"  %%   "jackson-module-scala"  % jacksonVersion,
+  "org.slf4j"                      %   "log4j-over-slf4j"      % slf4jVersion,
+  "org.slf4j"                      %   "slf4j-simple"          % slf4jVersion,
   "org.apache.zookeeper"           %   "zookeeper"             % "3.3.6" excludeAll(
     ExclusionRule(organization = "log4j"),
     ExclusionRule(organization = "jline")
