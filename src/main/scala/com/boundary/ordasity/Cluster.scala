@@ -21,7 +21,7 @@ import javax.management.ObjectName
 
 import java.util.{Collections, HashMap, Map}
 import com.codahale.metrics.MetricRegistry
-import nl.grons.metrics.scala.{Meter, InstrumentedBuilder}
+import nl.grons.metrics.scala.Meter
 import org.slf4j.LoggerFactory
 
 import scala.collection.JavaConversions._
@@ -40,8 +40,7 @@ import org.apache.zookeeper.Watcher.Event.KeeperState
 import java.util.concurrent._
 import overlock.threadpool.NamedThreadFactory
 import com.fasterxml.jackson.databind.node.ObjectNode
-import scala.Some
-import com.boundary.ordasity.NodeInfo
+import com.boundary.ordasity.metrics.Instrumented
 
 trait ClusterMBean {
   def join() : String
@@ -50,8 +49,7 @@ trait ClusterMBean {
 }
 
 class Cluster(val name: String, val listener: Listener, config: ClusterConfig)
-    extends ClusterMBean with InstrumentedBuilder {
-  override val metricRegistry = new MetricRegistry()
+    extends ClusterMBean with Instrumented {
 
   val log = LoggerFactory.getLogger(getClass)
   var myNodeID = config.nodeId
@@ -293,7 +291,7 @@ class Cluster(val name: String, val listener: Listener, config: ClusterConfig)
       registerWatchers()
     initialized.set(true)
     initializedLatch.countDown()
-    
+
     setState(NodeState.Started)
     claimer.requestClaim()
     verifyIntegrity()

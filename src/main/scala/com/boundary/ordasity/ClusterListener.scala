@@ -32,4 +32,3 @@ abstract class SmartListener extends Listener {
 abstract class ClusterListener extends Listener {
   def startWork(workUnit: String)
 }
-

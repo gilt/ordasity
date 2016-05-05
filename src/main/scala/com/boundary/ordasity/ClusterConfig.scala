@@ -17,7 +17,7 @@
 package com.boundary.ordasity
 
 import java.net.InetAddress
-import scala.reflect.BeanProperty
+import scala.beans.BeanProperty
 
 class ClusterConfig {
 

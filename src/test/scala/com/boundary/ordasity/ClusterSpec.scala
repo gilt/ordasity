@@ -18,7 +18,7 @@ package com.boundary.ordasity
 
 import collection.JavaConversions._
 import balancing.{CountBalancingPolicy, BalancingPolicy}
-import org.junit.Test
+import org.junit.{After, Test}
 import java.util.{UUID, HashMap}
 import org.apache.zookeeper.data.Stat
 import org.apache.zookeeper.ZooDefs.Ids
@@ -28,7 +28,9 @@ import com.simple.simplespec.Spec
 import com.google.common.base.Charsets
 import org.mockito.invocation.InvocationOnMock
 import org.apache.zookeeper.KeeperException.NoNodeException
+import com.codahale.metrics.{Metric, MetricFilter}
 import com.fasterxml.jackson.databind.node.ObjectNode
+import com.boundary.ordasity.metrics.OrdasityMetricRegistry
 
 class ClusterSpec extends Spec {
 
@@ -43,6 +45,12 @@ class ClusterSpec extends Spec {
   val cluster = new Cluster(id, mockClusterListener, config)
 
   class `Test Cluster` {
+
+    @After def cleanupMetrics {
+      OrdasityMetricRegistry.registry.removeMatching(new MetricFilter {
+          def matches(name: String, metric: Metric) = true
+      })
+    }
 
     @Test def `previous ZK session still active` {
       val nodeInfo = NodeInfo(NodeState.Started.toString, 101L)
@@ -309,7 +317,7 @@ class ClusterSpec extends Spec {
       val mine = collection.mutable.Set("foo", "dong")
       val noLongerMine = collection.mutable.Set("bar", "baz")
       val claimedForHandoff = collection.mutable.Set("taco")
-      
+
       cluster.myWorkUnits.addAll(mine)
       cluster.myWorkUnits.addAll(nonexistent)
       cluster.myWorkUnits.addAll(noLongerMine)
@@ -530,4 +538,3 @@ class ClusterSpec extends Spec {
   }
 
 }
-
